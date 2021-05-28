@@ -14,6 +14,7 @@ if [ ! -f /config/tmm.jar ]; then
     cp -r /defaults/* /config/
     cd /config
     tar zxvf /config/tmm.tar.gz
+	unzip -o tmm.zip
 fi
 
 # Take ownership of the config directory content.

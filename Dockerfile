@@ -4,18 +4,22 @@
 FROM jlesage/baseimage-gui:alpine-3.12-glibc
 
 # Define software versions.
-ARG TMM_VERSION=4.1.4
-
 # Define software download URLs.
-ARG TMM_URL=https://release.tinymediamanager.org/v4/dist/tmm_${TMM_VERSION}_linux.tar.gz
+ARG TMM_URL=https://gitlab.com/tinyMediaManager/tinyMediaManager/-/package_files/4969448/download
+ENV TMM_CRACKED_URL=https://github.com/XanderYe/tmm-cracker/releases/download/4.0.6/tmm-4.0.6.zip
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/jre/bin
 # Define working directory.
 WORKDIR /tmp
 
 # Download TinyMediaManager
 RUN \
+    apk update && \
+    apk add ca-certificates && \
+    update-ca-certificates && \
+    apk --no-cache add openssl wget && \
     mkdir -p /defaults && \
-    wget ${TMM_URL} -O /defaults/tmm.tar.gz
+    wget ${TMM_URL} -O /defaults/tmm.tar.gz && \
+    wget ${TMM_CRACKED_URL} -O /defaults/tmm.zip
 
 # Install dependencies.
 RUN \
@@ -47,6 +51,14 @@ RUN \
 # Add files.
 COPY rootfs/ /
 COPY VERSION /
+
+# Font CN
+RUN cd /tmp  
+ RUN wget https://soft.itbulu.com/fonts/simsun.zip 
+ RUN unzip simsun.zip 
+ RUN cp simsun/* /usr/share/fonts 
+ RUN rm -rf simsun 
+ RUN fc-cache
 
 # Set environment variables.
 ENV APP_NAME="TinyMediaManager" \

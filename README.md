@@ -19,6 +19,10 @@ docker run -d --name=tinymediamanager \
 -v /config:/config \
 -v /media:/media \
 -e GROUP_ID=0 -e USER_ID=0 -e TZ=Asia/Shanghai \
+--add-host=api.themoviedb.org:13.224.161.90 \
+--add-host=image.tmdb.org:104.16.61.155 \
+--add-host=api.themoviedb.org:13.35.67.86 \
+--add-host=www.themoviedb.org:54.192.151.79 \
 -p 5800:5800 \
 -p 5900:5900 \
 wakongka/tinymediamanager
@@ -33,6 +37,14 @@ services:
     volumes:
             - /config:/config
             - /media:/media
+    ports:
+      - "5800:5800"
+	  - "5900:5900"
+    extra_hosts:
+      - "api.themoviedb.org:13.224.161.90"
+	  - "image.tmdb.org:104.16.61.155"
+	  - "api.themoviedb.org:13.35.67.86"
+	  - "www.themoviedb.org:54.192.151.79"
     environment:
       GROUP_ID: "0"
       USER_ID: "0"

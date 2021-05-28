@@ -25,14 +25,14 @@ docker run -d --name=tinymediamanager \
 --add-host=www.themoviedb.org:54.192.151.79 \
 -p 5800:5800 \
 -p 5900:5900 \
-wakongka/tinymediamanager
+wakongka/tinymediamanager-docker
 ```
 docker-compose.yml:
 ```bash
 version: "3"
 services:
   tmm:
-    image: wakongka/tinymediamanager:latest
+    image: wakongka/tinymediamanager-docker:latest
     container_name: tmm
     volumes:
             - /config:/config
